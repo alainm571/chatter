@@ -4,10 +4,16 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @users = User.all
+@users = User.search(params[:search])
+    @micropost = current_user.microposts.build if logged_in?
+    @microposts = Micropost.all
   end
 
   # GET /users/1 or /users/1.json
   def show
+     @micropost = current_user.microposts.build if logged_in?
+    @microposts = Micropost.all
+
   end
 
   # GET /users/new
@@ -61,9 +67,11 @@ class UsersController < ApplicationController
     def set_user
       @user = User.find(params[:id])
     end
-
+def micropost_params
+params.require(:micropost).permit(:content)
+end
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password)
+      params.require(:user).permit(:name, :email,:password)
     end
 end

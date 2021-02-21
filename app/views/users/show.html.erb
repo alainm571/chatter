@@ -1,6 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<p>
   <strong>Name:</strong>
   <%= @user.name %>
 </p>
@@ -9,11 +8,17 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
+<div class="col-md-8">
+<% if @user.microposts.any? %>
+<% @microposts.each do |micropost| %>
+      <br><tr>
+        <td><%= micropost.content %></td>&nbsp<td>posted by:</td> &nbsp<td><%=micropost.user.name %></td><br>
+        </tr>
+        <% end %>
+        <h3>Your Microposts (<%= @user.microposts.count %>)</h3>
 
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
+<% end %>
+</div>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
